@@ -1,9 +1,190 @@
-## QT_Kernel_OS 프로젝트
+## QT_Kernel_OS Project
 ###### 2024.09.20 Update
 
 <img width="801" alt="스크린샷 2024-09-20 오후 3 19 54" src="https://github.com/user-attachments/assets/aead8c10-24aa-4fdd-b386-938faf8915e2">
 <img width="799" alt="스크린샷 2024-09-20 오후 3 21 29" src="https://github.com/user-attachments/assets/0b4fd327-4220-4a3c-9c27-7d49efe113bd">
 
+
+### QT_Kernel_OS Project
+###### Updated: **2024.09.20**
+
+This project, **QT_Kernel_OS**, was developed as part of the **Hanwha Vision VEDA Academy**, a bootcamp organized by Hanwha Vision, a leading South Korean defense contractor. The project was independently created by **Azabell1993** during this bootcamp. Although the bootcamp was a valuable learning experience, the developer did not secure a position at Hanwha Vision.
+
+---
+
+### Overview
+
+The **QT_Kernel_OS** project is a basic prototype operating system developed using **Qt**. It simulates essential operating system functionalities, including **command-line command processing** and **smart pointer management**.
+
+#### **Project Details**
+1. **Version:** 1.2 (2024.09.20)
+2. **Key Features:**
+   - Command-line command handling
+   - Smart pointer management
+   - Multithreading and multiprocessing
+   - Network communication management
+3. **Developer:** Park JiWoo (Azabell1993)
+
+#### **Documentation**
+For detailed project documentation, visit:  
+[QT_Kernel_OS Documentation](https://azabell1993.github.io/QT_Kernel_OS/files.html)
+
+---
+
+### **Key Features**
+
+#### 1. Command-Line Command Processing  
+The **QT_Kernel_OS** provides a fully functional **command-line interface** capable of processing real commands. Supported commands include:  
+
+```plaintext
+pwd: Display the current working directory  
+ls: List files and directories  
+cd <directory>: Change directory  
+cp <source> <destination>: Copy files  
+mv <source> <destination>: Move files  
+df -h: Display disk usage  
+du <directory>: Show directory size  
+printf("message"): Print a message  
+history: Show command history  
+mkdir <directory>: Create a directory  
+rmdir <directory>: Delete a directory  
+clear: Clear the screen  
+ifconfig: Display network interface information  
+netstat: Show network connections  
+help_modal: Display help in a modal window  
+exit: Exit the shell  
+shutdown || poweroff: Shut down the system  
+```
+
+---
+
+#### 2. Smart Pointer Management  
+The **QT_Kernel_OS** project employs a custom **smart pointer library (`smartptr.h`)** to manage memory safely. The library includes:  
+- Automatic memory management to prevent memory leaks  
+- Mutex and reference count management for concurrent access  
+
+**Library Location:** `C_lib/smartpointer`
+**[c_smartpointer]**  
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Azabell1993&repo=c_smartpointer)](https://github.com/Azabell1993/c_smartpointer)
+
+
+---
+
+#### 3. Chat Server Implementation  
+Using the smart pointer library, a **multi-client chat server** has been implemented. Features include:  
+- Message broadcasting to multiple users  
+- Chatroom and user management  
+
+**Chat Server Location:** `smartpointer_multi_chat`
+**[smartpointer_multi_chat]**  
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Azabell1993&repo=smartpointer_multi_chat)](https://github.com/Azabell1993/smartpointer_multi_chat)
+
+---
+
+#### 4. Multithreading and Multiprocessing  
+The project uses smart pointers to ensure safe memory management in multithreaded and multiprocess environments. It includes:  
+- Thread synchronization  
+- Inter-process communication  
+- Robust error handling mechanisms  
+
+---
+
+#### 5. Network Communication Management  
+The project simulates **TCP/IP network communication**, including stable message transmission between clients and servers using smart pointer-managed socket connections.
+
+---
+
+### **Core Components**
+
+#### **1. `kernel_chat.h` File**  
+This file provides functions for handling network communication in a chat server. It uses system calls like `socket`, `bind`, and `listen` to set up a TCP server. Key functionalities include:  
+- **Client Management:** Tracks active clients and their chatroom IDs.  
+- **Broadcast Messaging:** Sends messages to all clients in a chatroom, excluding the sender.  
+- **Logging:** Logs messages using a mutex for synchronized access.
+
+---
+
+#### **2. `kernel_smartptr.h` File**  
+This file defines the **SmartPtr** structure and associated functions for managing memory with reference counting and mutex synchronization.
+
+**Key Functions:**
+- `create_smart_ptr(size_t size, ...)`  
+  Allocates memory and initializes reference counting and mutexes.  
+- `retain(SmartPtr *sp)`  
+  Increases the reference count with mutex synchronization.  
+- `release(SmartPtr *sp)`  
+  Decreases the reference count and frees memory when the count reaches zero.
+
+---
+
+#### **3. `kernel_uniqueptr.h` File**  
+Implements unique and shared smart pointers for advanced memory management.  
+
+**Key Functions:**
+- `create_unique_ptr(size_t size, void (*deleter)(void*))`  
+  Allocates memory and assigns a custom deleter function.  
+- `release_unique_ptr(UniquePtr *up)`  
+  Releases the memory managed by a unique pointer.  
+- `create_shared_ptr(size_t size, void (*deleter)(void*))`  
+  Allocates shared memory with reference counting.  
+- `release_shared_ptr(SharedPtr *sp)`  
+  Frees shared memory when the reference count reaches zero.
+
+---
+
+#### **4. `td_kernel_engine.c` File**  
+Implements advanced kernel functionalities, including multithreading, multiprocessing, and network communication simulation.
+
+**Key Functions:**
+- `kernel_chat(int num_args, ...)`  
+  Handles TCP server creation, client connections, and message processing.  
+- `main()`  
+  Tests and executes various kernel functionalities, including smart pointer management, synchronization, and network communication.
+
+---
+
+### **Installation and Build Instructions**
+
+#### **1. Clone the repository**  
+```bash
+git clone https://github.com/Azabell1993/QT_Kernel_OS.git
+```
+
+#### **2. Navigate to the project directory**  
+```bash
+cd QT_Kernel_OS/C_lib
+make
+```
+
+A successful build will display output similar to the following:
+```plaintext
+Compiling for arm64: src/kernel_printf.c  
+Creating static library kernel_lib.a  
+...  
+Building td_kernel_engine executable  
+```
+
+#### **3. Run the executable**  
+```bash
+./td_kernel_engine.exec
+```
+
+#### **4. Test the project in Qt Creator**  
+Ensure no duplicate port issues arise during the process. Restart the application if needed.
+
+#### **5. Cross-Compile**  
+The project supports cross-compilation for both `x86_64` and `arm64` architectures.
+
+---
+
+### **Additional Notes**
+- This project demonstrates foundational operating system concepts and programming techniques.  
+- Despite its prototype nature, it serves as an excellent example of how **Qt** and custom **smart pointer libraries** can be used to simulate operating system functionalities.  
+- Developed as part of the **Hanwha Vision VEDA Academy Bootcamp**, it showcases the skills gained during the program, even though the developer ultimately did not join Hanwha Vision.
+
+
+
+-------------------------------
 
 **[tree]**
 ```
